@@ -1,0 +1,15 @@
+// ignore_for_file: constant_identifier_names
+
+enum ErrorCode {
+  UNAUTHENTICATED,
+  FORBIDDEN,
+  BADREQUEST,
+  NO_INTERNET_CONNECTION,
+  TIMEOUT,
+  SERVER_ERROR,
+  EXIST,
+  NOT_EXIST_ACCOUNT,
+  APP_ERROR,
+  USER_DATA_NOT_FOUND,
+  UNKNOWN
+}
