@@ -13,9 +13,7 @@ class RemoteDatasource {
   RemoteDatasource();
 
   static RemoteDatasource get instance {
-    if (_instance == null) {
-      _instance = RemoteDatasource();
-    }
+    _instance ??= RemoteDatasource();
     return _instance!;
   }
 
@@ -55,7 +53,9 @@ class RemoteDatasource {
         throw Exception("Error");
       }
     } catch (e) {
-      print('Api Error is: $e');
+      if (kDebugMode) {
+        print('Api Error is: $e');
+      }
       if (e is RemoteExceptions) rethrow;
       if (e is DioException) {
         throw ErrorHandler.handleRemoteStatusCode(e.response?.statusCode ?? 400,
@@ -95,7 +95,9 @@ class RemoteDatasource {
         throw Exception("Error");
       }
     } catch (e) {
-      print('Api Error is: $e');
+      if (kDebugMode) {
+        print('Api Error is: $e');
+      }
       if (e is RemoteExceptions) rethrow;
       if (e is DioException) {
         throw ErrorHandler.handleRemoteStatusCode(e.response?.statusCode ?? 400,
@@ -125,8 +127,8 @@ class RemoteDatasource {
         data: body,
         options: await setOptions(useToken),
       );
-      print("sd");
       if (kDebugMode) {
+      print("sd");
         print('response is $response');
       }
       if (ErrorHandler.handleRemoteStatusCode(
@@ -216,7 +218,9 @@ class RemoteDatasource {
         throw Exception("Error");
       }
     } catch (e) {
-      print('Api Error is: $e\n');
+      if (kDebugMode) {
+        print('Api Error is: $e\n');
+      }
       if (e is RemoteExceptions) rethrow;
       if (e is DioException) {
         throw ErrorHandler.handleRemoteStatusCode(e.response?.statusCode ?? 400,

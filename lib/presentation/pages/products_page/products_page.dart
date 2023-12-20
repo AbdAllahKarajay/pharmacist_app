@@ -5,9 +5,7 @@ import 'package:pharmacist_application/presentation/components/appBar/home_app_b
 
 import '../../../core/data/enums/loading_states.dart';
 import '../../components/general/error_view.dart';
-import '../../components/general/theme_button.dart';
 import 'components/product_card.dart';
-import 'components/product_details.dart';
 import 'products_controller.dart';
 
 class ProductsPage extends StatelessWidget {

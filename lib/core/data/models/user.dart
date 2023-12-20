@@ -12,9 +12,9 @@ class User{
 
   Map<String, dynamic> toMap() {
     return {
-      'id': this.id,
-      'token': this.token,
-      'phone': this.phone,
+      'id': id,
+      'token': token,
+      'phone': phone,
     };
   }
 

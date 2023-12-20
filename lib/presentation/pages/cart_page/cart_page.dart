@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pharmacist_application/presentation/pages/cart_page/cart_controller.dart';
-import 'package:pharmacist_application/presentation/pages/products_page/components/product_card.dart';
-import 'package:pharmacist_application/presentation/pages/search/search_controller.dart';
 import 'component/product_cart_card.dart';
 
 class CartPage extends StatelessWidget {

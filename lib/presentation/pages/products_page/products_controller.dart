@@ -5,7 +5,6 @@ import 'package:pharmacist_application/core/repository/error_handling/remote_exc
 
 import '../../../core/data/models/category_model.dart';
 import '../../../core/data/models/company_model.dart';
-import '../../../core/repository/remote_datasource.dart';
 
 const staticProducts = [
   Product(

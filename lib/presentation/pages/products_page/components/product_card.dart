@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:pharmacist_application/presentation/pages/cart_page/cart_controller.dart';
-import 'package:pharmacist_application/presentation/pages/products_page/products_controller.dart';
+import '../../cart_page/cart_controller.dart';
+import '../products_controller.dart';
 
-import '../../../../core/data/models/product.dart';
-import 'product_details.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({Key? key, required this.index}) : super(key: key);
@@ -125,7 +123,7 @@ class ProductCard extends StatelessWidget {
                               // },
                               onChanged: (value) {
                                 // print(int.parse(value));
-                                if (!value.isEmpty) {
+                                if (value.isNotEmpty) {
                                   Get.cartController.setProduct(
                                       product, int.parse(value));
                                 }
@@ -207,35 +205,4 @@ class ProductCard extends StatelessWidget {
     );
   }
 
-  _buildField({
-    required String title,
-    String? text,
-    Widget? child,
-    TextStyle? style,
-  }) {
-    return Flex(
-      direction: Axis.horizontal,
-      children: [
-        Flexible(
-          flex: 2,
-          fit: FlexFit.tight,
-          child: Text(
-            title,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-          ),
-        ),
-        const Spacer(),
-        Flexible(
-          flex: 2,
-          fit: FlexFit.tight,
-          child: child ??
-              Text(
-                text ?? "",
-                style: const TextStyle(fontSize: 12),
-                textAlign: TextAlign.start,
-              ),
-        ),
-      ],
-    );
-  }
 }

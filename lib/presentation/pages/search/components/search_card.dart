@@ -104,7 +104,7 @@ class SearchProductCard extends StatelessWidget {
                         ],
                         keyboardType: TextInputType.number,
                         onChanged: (value) {
-                          if (!value.isEmpty) {
+                          if (value.isNotEmpty) {
                             Get.cartController
                                 .setProduct(product, int.parse(value));
                           }
@@ -136,7 +136,6 @@ class SearchProductCard extends StatelessWidget {
     required String title,
     String? text,
     Widget? child,
-    TextStyle? style,
   }) {
     return Flex(
       direction: Axis.horizontal,

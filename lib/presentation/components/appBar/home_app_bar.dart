@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pharmacist_application/core/config/config.dart';
 import 'package:pharmacist_application/core/util/palette.dart';
-import 'package:pharmacist_application/core/util/theme.dart';
 import 'package:pharmacist_application/presentation/components/general/favorite_button.dart';
-import 'package:pharmacist_application/presentation/components/general/theme_button.dart';
 import 'package:pharmacist_application/presentation/pages/search/search_controller.dart';
 
 import '../../pages/search/search_page.dart';

@@ -5,7 +5,6 @@ import 'package:pharmacist_application/presentation/pages/search/search_controll
 
 import '../../../core/data/enums/loading_states.dart';
 import '../../components/general/error_view.dart';
-import '../products_page/components/product_card.dart';
 import 'components/search_card.dart';
 
 class SearchPage extends StatelessWidget {

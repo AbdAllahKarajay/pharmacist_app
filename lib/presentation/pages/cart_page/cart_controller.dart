@@ -1,10 +1,5 @@
-import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-import 'package:pharmacist_application/core/data/enums/loading_states.dart';
 import 'package:pharmacist_application/core/data/models/product.dart';
-import 'package:pharmacist_application/core/repository/error_handling/remote_exceptions.dart';
-import 'package:pharmacist_application/core/repository/remote_datasource.dart';
-import 'package:pharmacist_application/presentation/pages/products_page/products_controller.dart';
 class CartController extends GetxController{
   // final Rx<LoadingStates> state = LoadingStates.nothing.obs;
   final RxMap<Product, int> products = <Product, int>{}.obs;

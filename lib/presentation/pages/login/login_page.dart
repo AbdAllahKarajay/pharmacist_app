@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:pharmacist_application/core/util/theme.dart';
@@ -24,7 +25,9 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage>{
   _listener(LoadingStates state){
     // final state = Get.authController.state.value;
-    print("listen: $state,");
+    if (kDebugMode) {
+      print("listen: $state,");
+    }
     StateSnackBar.stateSnackBars(
         state: state,
         loadingMessage: "trying_login".tr,
