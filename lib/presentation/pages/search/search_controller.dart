@@ -5,6 +5,7 @@ import '../../../core/data/models/category_model.dart';
 import '../../../core/data/models/company_model.dart';
 import '../../../core/data/models/product.dart';
 import '../../../core/repository/error_handling/remote_exceptions.dart';
+import '../../../core/repository/remote_datasource.dart';
 
 class SearchGetController extends GetxController{
   final Rx<LoadingStates> state = LoadingStates.nothing.obs;
@@ -52,8 +53,8 @@ class SearchGetController extends GetxController{
   Future<void> getProducts() async {
     state.value = LoadingStates.loading;
     try {
-      // final newProducts = await RemoteDatasource.instance.performGetListRequest<Product>("/api/category/$categoryId/medicines", fromMap: Product.fromMap);
-      final newProducts = staticProducts;
+      final newProducts = await RemoteDatasource.instance.performGetListRequest<Product>("/api/search", fromMap: Product.fromMap);
+      // final newProducts = staticProducts;
       state.value = LoadingStates.done;
       products.value = newProducts;
     } on RemoteExceptions {

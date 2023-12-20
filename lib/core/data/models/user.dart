@@ -1,28 +1,28 @@
 class User{
-  final String id;
+  // final String id;
   final String token;
-  final String phone;
+  // final String phone;
 
 
   const User({
     required this.token,
-    required this.id,
-    required this.phone,
+    // required this.id,
+    // required this.phone,
   });
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
+      // 'id': id,
       'token': token,
-      'phone': phone,
+      // 'phone': phone,
     };
   }
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
-      id: map['id'] as String,
+      // id: map['id'] as String,
       token: map['token'] as String,
-      phone: map['phone'] as String,
+      // phone: map['phone'] as String,
     );
   }
 }

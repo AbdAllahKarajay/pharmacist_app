@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pharmacist_application/presentation/pages/favorite_page/favorite_controller.dart';
@@ -34,6 +36,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         translations: AppTranslations(),
+        scrollBehavior: MyCustomScrollDevices(),
         locale: const Locale('en'),
         theme: ThemeConfig.themeData(false),
         darkTheme: ThemeConfig.themeData(true),
@@ -42,6 +45,11 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
+}
+
+class MyCustomScrollDevices extends ScrollBehavior{
+  @override
+  Set<PointerDeviceKind> get dragDevices => {...super.dragDevices, PointerDeviceKind.mouse};
 }
 
 class AppTranslations extends Translations {
