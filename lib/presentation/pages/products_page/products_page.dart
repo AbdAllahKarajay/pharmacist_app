@@ -42,36 +42,40 @@ class ProductsPage extends StatelessWidget {
               return Column(
                 children: [
                   if (Get.productsController.searchTypeIndex != null) 
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ChoiceChip(
-                          label: Text(Get.productsController.searchTypes[0]),
-                          onSelected: (value) {
-                            if(value) {
-                              Get.productsController.searchTypeIndex?.value = 0;
-                            }
-                          },
-                          selected:
-                              Get.productsController.searchTypeIndex!.value ==
-                                  0,
-                          selectedColor: Theme.of(context).primaryColor,
-                        ),
-                        const SizedBox(width: 15,),
-                        ChoiceChip(
-                          label: Text(Get.productsController.searchTypes[1]),
-                          onSelected: (value) {
-                            if(value) {
-                              Get.productsController.searchTypeIndex?.value = 1;
-                            }
-                          },
-                          selected:
-                              Get.productsController.searchTypeIndex!.value ==
-                                  1,
-                          selectedColor: Theme.of(context).primaryColor,
-                        ),
-                      ],
-                    ),
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ChoiceChip(
+                            label: Text(Get.productsController.searchTypes[0].tr),
+                            onSelected: (value) {
+                              if(value) {
+                                Get.productsController.searchTypeIndex?.value = 0;
+                                Get.sear
+                              }
+                            },
+                            selected:
+                                Get.productsController.searchTypeIndex!.value ==
+                                    0,
+                            selectedColor: Theme.of(context).primaryColor,
+                          ),
+                          const SizedBox(width: 15,),
+                          ChoiceChip(
+                            label: Text(Get.productsController.searchTypes[1].tr),
+                            onSelected: (value) {
+                              if(value) {
+                                Get.productsController.searchTypeIndex?.value = 1;
+                              }
+                            },
+                            selected:
+                                Get.productsController.searchTypeIndex!.value ==
+                                    1,
+                            selectedColor: Theme.of(context).primaryColor,
+                          ),
+                        ],
+                      ),
+                  ),
                   Expanded(
                     child: ListView.builder(
                       // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
