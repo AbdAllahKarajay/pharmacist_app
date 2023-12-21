@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pharmacist_application/presentation/components/general/main_filled_button.dart';
 import 'package:pharmacist_application/presentation/pages/cart_page/cart_controller.dart';
 import 'package:pharmacist_application/presentation/pages/products_page/components/product_card.dart';
 import 'package:pharmacist_application/presentation/pages/search/search_controller.dart';
@@ -17,16 +18,25 @@ class CartPage extends StatelessWidget {
       ),
       body: GetBuilder<CartController>(
         builder: (controller) {
-          return ListView.builder(
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            itemCount: Get.cartController.products.length,
-            itemBuilder: (context, index) => Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ProductCartTile(
-                product:
-                    Get.cartController.products.entries.elementAt(index).key,
+          return Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  itemCount: Get.cartController.products.length,
+                  itemBuilder: (context, index) => Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ProductCartTile(
+                      product:
+                          Get.cartController.products.entries.elementAt(index).key,
+                    ),
+                  ),
+                ),
               ),
-            ),
+              const SizedBox(height: 20),
+              Center(child: ElevatedButton(onPressed: (){}, child: Text("send".tr))),
+              const SizedBox(height: 20),
+            ],
           );
         },
       ),

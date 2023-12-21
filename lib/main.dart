@@ -74,6 +74,7 @@ class AppTranslations extends Translations {
           'company': 'Company',
           'search_by': 'Search By',
           'medicine_name': 'Medicine Name',
+          'send': 'send',
         },
         'ar': {
           "appName": appNameAr,
@@ -99,6 +100,7 @@ class AppTranslations extends Translations {
           'company': 'الشركة',
           'search_by': 'البحث حسب',
           'medicine_name': 'اسم الدواء',
+          'send': 'ارسال',
         }
       };
 }

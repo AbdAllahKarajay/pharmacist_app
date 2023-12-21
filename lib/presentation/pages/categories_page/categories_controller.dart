@@ -12,8 +12,8 @@ class CategoriesController extends GetxController{
   Future<void> getCategories() async {
     state.value = LoadingStates.loading;
     try{
-      // List<CategoryModel> newCategories = await RemoteDatasource.instance.performGetListRequest<CategoryModel>("/api/category", fromMap: CategoryModel.fromMap);
-      final newCategories = List.generate(10, (index) => CategoryModel(id: 1, name: "Category $index"));
+      List<CategoryModel> newCategories = await RemoteDatasource.instance.performGetListRequest<CategoryModel>("/api/category", fromMap: CategoryModel.fromMap);
+      // final newCategories = List.generate(10, (index) => CategoryModel(id: 1, name: "Category $index"));
       state.value = LoadingStates.done;
       categories.value = newCategories;
     }on RemoteExceptions{

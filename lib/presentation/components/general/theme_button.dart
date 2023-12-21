@@ -13,10 +13,17 @@ class ThemeButton extends StatelessWidget {
       onPressed: () => Get.globalConfig.changeThemeMode(
           Theme.of(context).isDark ? ThemeMode.light : ThemeMode.dark),
       icon: Obx(
-        () => Icon(
-          Get.globalConfig.themeMode.value == ThemeMode.dark
-              ? Icons.nightlight_outlined
-              : Icons.light_mode_outlined,
+        () => Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(Get.globalConfig.themeMode.value == ThemeMode.dark
+                ? "Dark" : "Light"),
+            Icon(
+              Get.globalConfig.themeMode.value == ThemeMode.dark
+                  ? Icons.nightlight_outlined
+                  : Icons.light_mode_outlined,
+            ),
+          ],
         ),
       ),
     );

@@ -21,9 +21,9 @@ class RemoteDatasource {
 
   final Dio dio = Dio();
 
-  static const String scheme = 'https';
-  static const int? port = null;
-  static const String host = '2892-31-9-117-69.ngrok-free.app';
+  static const String scheme = 'http';
+  static const int? port = 5000;
+  static const String host = '192.168.43.162';
   static Uri uri = Uri(scheme: scheme, host: host, port: port);
 
   Future performPutRequest<T>(

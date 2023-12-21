@@ -33,8 +33,8 @@ class ProductsController extends GetxController {
   Future<void> getProducts({int? categoryId}) async {
     state.value = LoadingStates.loading;
     try {
-      // final newProducts = await RemoteDatasource.instance.performGetListRequest<Product>("/api/category/$categoryId/medicines", fromMap: Product.fromMap);
-      final newProducts = staticProducts;
+      final newProducts = await RemoteDatasource.instance.performGetListRequest<Product>("/api/category/$categoryId/medicines", fromMap: Product.fromMap);
+      // final newProducts = staticProducts;
       state.value = LoadingStates.done;
       products.value = newProducts;
     } on RemoteExceptions {
