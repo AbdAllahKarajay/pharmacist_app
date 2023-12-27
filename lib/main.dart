@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pharmacist_application/presentation/pages/favorite_page/favorite_controller.dart';
@@ -5,12 +7,12 @@ import 'package:pharmacist_application/presentation/pages/search/search_controll
 import 'core/config/config.dart';
 import 'core/config/global_data.dart';
 import 'package:pharmacist_application/presentation/pages/cart_page/cart_controller.dart';
-import 'package:pharmacist_application/presentation/pages/categories_page/categories_controller.dart';
 import 'package:pharmacist_application/presentation/pages/login/auth_controller.dart';
 import 'package:pharmacist_application/presentation/pages/login/login_page.dart';
 import 'package:pharmacist_application/presentation/pages/products_page/products_controller.dart';
 
 import 'core/util/theme.dart';
+import 'presentation/pages/home_page/categories_page/categories_controller.dart';
 
 void main() {
   Get.put(Config());
@@ -34,7 +36,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         translations: AppTranslations(),
-        locale: const Locale('en'),
+        scrollBehavior: MyCustomScrollDevices(),
+        locale: Get.locale,
         theme: ThemeConfig.themeData(false),
         darkTheme: ThemeConfig.themeData(true),
         themeMode: Get.globalConfig.themeMode.value,
@@ -42,6 +45,11 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
+}
+
+class MyCustomScrollDevices extends ScrollBehavior{
+  @override
+  Set<PointerDeviceKind> get dragDevices => {...super.dragDevices, PointerDeviceKind.mouse};
 }
 
 class AppTranslations extends Translations {
@@ -75,6 +83,9 @@ class AppTranslations extends Translations {
           'search_by': 'Search By',
           'medicine_name': 'Medicine Name',
           'send': 'send',
+          'settings': 'Settings',
+          'my_orders': 'My Orders',
+          'products': 'Products',
         },
         'ar': {
           "appName": appNameAr,
@@ -101,6 +112,9 @@ class AppTranslations extends Translations {
           'search_by': 'البحث حسب',
           'medicine_name': 'اسم الدواء',
           'send': 'ارسال',
+          'settings': 'اعدادات',
+          'my_orders': 'طلباتي',
+          'products': 'المنتجات',
         }
       };
 }

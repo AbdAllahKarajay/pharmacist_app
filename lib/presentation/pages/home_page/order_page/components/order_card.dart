@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/data/models/category_model.dart';
+import '../../../../../core/data/models/category_model.dart';
+import '../../../../../core/data/models/order.dart';
 
-class CategoryCard extends StatelessWidget {
-  const CategoryCard({Key? key, required this.category, required this.onTap})
+class OrderCard extends StatelessWidget {
+  const OrderCard({Key? key, required this.order, required this.onTap})
       : super(key: key);
-  final CategoryModel category;
+  final Order order;
   final void Function() onTap;
 
   @override
@@ -18,7 +19,7 @@ class CategoryCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
           color: Theme.of(context).cardTheme.color,
         ),
-        child: Center(child: Text(category.name)),
+        child: Center(child: Text(order.total_price.toString())),
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:pharmacist_application/presentation/pages/categories_page/categories_page.dart';
+import 'package:pharmacist_application/presentation/pages/home_page/categories_page/categories_screen.dart';
+import 'package:pharmacist_application/presentation/pages/home_page/home_page.dart';
 
 import '../../presentation/pages/login/login_page.dart';
 import '../data/models/user.dart';
@@ -23,7 +24,7 @@ class GlobalData extends GetxController {
 
   Future<void> setUser(User user) async {
     updateUser(user);
-    Get.offAll(()=>const CategoriesPage());
+    Get.offAll(()=>const HomePage());
   }
 
   Future<void> updateUser(User user) async {

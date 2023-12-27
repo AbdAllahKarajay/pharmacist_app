@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:pharmacist_application/presentation/pages/cart_page/cart_controller.dart';
-import 'package:pharmacist_application/presentation/pages/products_page/products_controller.dart';
+import '../cart_controller.dart';
 
 import '../../../../core/data/models/product.dart';
 import '../../products_page/components/product_details.dart';
@@ -83,7 +82,7 @@ class ProductCartTile extends StatelessWidget {
                               // },
                               onChanged: (value) {
                                 // print(int.parse(value));
-                                if (!value.isEmpty) {
+                                if (value.isNotEmpty) {
                                   Get.cartController.setProduct(
                                       product, int.parse(value));
                                 }
@@ -133,7 +132,6 @@ class ProductCartTile extends StatelessWidget {
     required String title,
     String? text,
     Widget? child,
-    TextStyle? style,
   }) {
     return Flex(
       direction: Axis.horizontal,

@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 import 'package:pharmacist_application/core/data/enums/loading_states.dart';
 import 'package:pharmacist_application/core/repository/error_handling/remote_exceptions.dart';
-import 'package:pharmacist_application/core/repository/remote_datasource.dart';
 
-import '../../../core/data/models/category_model.dart';
+import '../../../../core/data/models/category_model.dart';
+import '../../../../core/repository/remote_datasource.dart';
 
 class CategoriesController extends GetxController{
   final Rx<LoadingStates> state = LoadingStates.nothing.obs;

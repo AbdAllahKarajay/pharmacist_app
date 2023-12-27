@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:pharmacist_application/core/util/palette.dart';
 import '../../../../core/data/models/product.dart';
 import '../../../components/appBar/home_app_bar.dart';
-import '../../../components/general/theme_button.dart';
 
 class ProductDetails extends StatelessWidget {
   const ProductDetails({Key? key, required this.product})

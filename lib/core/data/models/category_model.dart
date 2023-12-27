@@ -9,8 +9,8 @@ class CategoryModel{
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-      'name': name,
+      'id': this.id,
+      'name': this.name,
     };
   }
 

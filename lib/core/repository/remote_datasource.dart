@@ -9,13 +9,12 @@ import 'error_handling/remote_exceptions.dart';
 
 class RemoteDatasource {
   static RemoteDatasource? _instance;
+  CancelToken _cancelToken = CancelToken();
 
   RemoteDatasource();
 
   static RemoteDatasource get instance {
-    if (_instance == null) {
-      _instance = RemoteDatasource();
-    }
+    _instance ??= RemoteDatasource();
     return _instance!;
   }
 
@@ -55,7 +54,9 @@ class RemoteDatasource {
         throw Exception("Error");
       }
     } catch (e) {
-      print('Api Error is: $e');
+      if (kDebugMode) {
+        print('Api Error is: $e');
+      }
       if (e is RemoteExceptions) rethrow;
       if (e is DioException) {
         throw ErrorHandler.handleRemoteStatusCode(e.response?.statusCode ?? 400,
@@ -95,9 +96,16 @@ class RemoteDatasource {
         throw Exception("Error");
       }
     } catch (e) {
-      print('Api Error is: $e');
+      if (kDebugMode) {
+        print('Api Error is: ${e.runtimeType} $e');
+      }
       if (e is RemoteExceptions) rethrow;
       if (e is DioException) {
+        if (kDebugMode) {
+          print("status code: ${e.response?.statusCode}");
+          print("message: ${e.message}");
+          print("data: ${e.response?.data}");
+        }
         throw ErrorHandler.handleRemoteStatusCode(e.response?.statusCode ?? 400,
             e.response?.data, e.response?.headers.map ?? {});
       } else {
@@ -125,8 +133,8 @@ class RemoteDatasource {
         data: body,
         options: await setOptions(useToken),
       );
-      print("sd");
       if (kDebugMode) {
+        print("sd");
         print('response is $response');
       }
       if (ErrorHandler.handleRemoteStatusCode(
@@ -179,6 +187,11 @@ class RemoteDatasource {
       }
       if (e is RemoteExceptions) rethrow;
       if (e is DioException) {
+        if (kDebugMode) {
+          print("status code: ${e.response?.statusCode}");
+          print("message: ${e.message}");
+          print("data: ${e.response?.data}");
+        }
         throw ErrorHandler.handleRemoteStatusCode(e.response?.statusCode ?? 400,
             e.response?.data, e.response?.headers.map ?? {});
       } else {
@@ -195,11 +208,15 @@ class RemoteDatasource {
   }) async {
     if (kDebugMode) {
       print('endpoints  is $endpoint');
+      print('params are $params');
     }
     try {
+      _cancelToken.cancel();
+      _cancelToken = CancelToken();
       final response = await dio.get(
         uri.resolve(endpoint).toString(),
         queryParameters: params,
+        cancelToken: _cancelToken,
         options: await setOptions(useToken),
       );
       if (kDebugMode) {
@@ -216,7 +233,9 @@ class RemoteDatasource {
         throw Exception("Error");
       }
     } catch (e) {
-      print('Api Error is: $e\n');
+      if (kDebugMode) {
+        print('Api Error is: $e\n');
+      }
       if (e is RemoteExceptions) rethrow;
       if (e is DioException) {
         throw ErrorHandler.handleRemoteStatusCode(e.response?.statusCode ?? 400,
@@ -233,6 +252,7 @@ class RemoteDatasource {
       options.headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
+        'ngrok-skip-browser-warning': 682,
         'Authorization': 'Bearer ${getx.Get.globalData.token}',
       };
     } else {

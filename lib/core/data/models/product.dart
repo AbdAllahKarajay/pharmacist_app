@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:pharmacist_application/core/data/models/category_model.dart';
 
 import 'company_model.dart';
