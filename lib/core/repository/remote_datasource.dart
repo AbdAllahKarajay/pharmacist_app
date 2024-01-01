@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart' as getx;
 import 'package:pharmacist_application/core/config/global_data.dart';
+import 'package:pharmacist_application/core/data/models/product.dart';
 
 import 'error_handling/error_code.dart';
 import 'error_handling/error_handler.dart';
@@ -20,9 +21,12 @@ class RemoteDatasource {
 
   final Dio dio = Dio();
 
-  static const String scheme = 'http';
-  static const int? port = 5000;
-  static const String host = '192.168.43.162';
+  // static const String scheme = 'http';
+  // static const int? port = 5000;
+  // static const String host = '192.168.43.162';
+  static const String scheme = 'https';
+  static const int? port = null;
+  static const String host = 'e869-185-107-94-199.ngrok-free.app';
   static Uri uri = Uri(scheme: scheme, host: host, port: port);
 
   Future performPutRequest<T>(
@@ -66,6 +70,52 @@ class RemoteDatasource {
       }
     }
   }
+
+  performDeleteRequest(String endpoint, {
+    dynamic body,
+    dynamic params,
+    bool useToken = true,
+    bool encrypt = false,
+  }) async {
+    if (kDebugMode) {
+      print('endpoints  is $endpoint');
+      print('data  is $body');
+    }
+    try {
+      final response = await dio.delete(
+        uri.resolve(endpoint).toString(),
+        queryParameters: params,
+        data: body,
+        options: await setOptions(useToken),
+      );
+      if (kDebugMode) {
+        print('response is $response');
+      }
+      if (ErrorHandler.handleRemoteStatusCode(
+          response.statusCode!, response.data, response.headers.map)) {
+        return response.data;
+      } else {
+        throw Exception("Error");
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Api Error is: ${e.runtimeType} $e');
+      }
+      if (e is RemoteExceptions) rethrow;
+      if (e is DioException) {
+        if (kDebugMode) {
+          print("status code: ${e.response?.statusCode}");
+          print("message: ${e.message}");
+          print("data: ${e.response?.data}");
+        }
+        throw ErrorHandler.handleRemoteStatusCode(e.response?.statusCode ?? 400,
+            e.response?.data, e.response?.headers.map ?? {});
+      } else {
+        throw RemoteExceptions(ErrorCode.APP_ERROR, e.toString());
+      }
+    }
+  }
+
 
   Future performPostRequest<T>(
     String endpoint, {
@@ -205,18 +255,17 @@ class RemoteDatasource {
     required T Function(Map<String, dynamic>) fromMap,
     Map<String, dynamic>? params,
     bool useToken = true,
+        CancelToken? cancelToken,
   }) async {
     if (kDebugMode) {
       print('endpoints  is $endpoint');
       print('params are $params');
     }
     try {
-      _cancelToken.cancel();
-      _cancelToken = CancelToken();
       final response = await dio.get(
         uri.resolve(endpoint).toString(),
         queryParameters: params,
-        cancelToken: _cancelToken,
+        cancelToken: cancelToken,
         options: await setOptions(useToken),
       );
       if (kDebugMode) {
@@ -249,6 +298,7 @@ class RemoteDatasource {
   Future<Options> setOptions(bool useToken) async {
     Options options = Options();
     if (useToken || getx.Get.globalData.isLoggedIn) {
+      print("using token");
       options.headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -256,11 +306,13 @@ class RemoteDatasource {
         'Authorization': 'Bearer ${getx.Get.globalData.token}',
       };
     } else {
-      options.headers = {
+    print("not using token");
+    options.headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       };
     }
     return options;
   }
+
 }

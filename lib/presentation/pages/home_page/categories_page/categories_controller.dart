@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:pharmacist_application/core/config/global_data.dart';
 import 'package:pharmacist_application/core/data/enums/loading_states.dart';
 import 'package:pharmacist_application/core/repository/error_handling/remote_exceptions.dart';
 
@@ -12,6 +13,7 @@ class CategoriesController extends GetxController{
   Future<void> getCategories() async {
     state.value = LoadingStates.loading;
     try{
+      print('Authorization:' 'Bearer ${Get.globalData.token}');
       List<CategoryModel> newCategories = await RemoteDatasource.instance.performGetListRequest<CategoryModel>("/api/category", fromMap: CategoryModel.fromMap);
       // final newCategories = List.generate(10, (index) => CategoryModel(id: 1, name: "Category $index"));
       state.value = LoadingStates.done;

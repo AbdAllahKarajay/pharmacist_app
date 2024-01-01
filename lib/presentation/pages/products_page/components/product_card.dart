@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:pharmacist_application/presentation/pages/favorite_page/favorite_controller.dart';
 import '../../cart_page/cart_controller.dart';
 import '../products_controller.dart';
-
 
 class ProductCard extends StatelessWidget {
   const ProductCard({Key? key, required this.index}) : super(key: key);
@@ -40,16 +40,47 @@ class ProductCard extends StatelessWidget {
             child: Column(children: [
               Row(
                 children: [
-                  Text(product.commercial_name,style: const TextStyle(fontSize: 12),),
+                  Text(
+                    product.commercial_name,
+                    style: const TextStyle(fontSize: 12),
+                  ),
                   const Spacer(),
-                  Text(product.price.toString() + " S.P".tr, style: const TextStyle(fontSize: 12),),
+                  Text(
+                    product.price.toString() + " S.P".tr,
+                    style: const TextStyle(fontSize: 12),
+                  ),
                 ],
               ),
               // _buildField(
               //     title: product.commercial_name,
               //     text: product.price.toString() + " S.P".tr),
               const SizedBox(height: 10),
-              Align(alignment: AlignmentDirectional.centerStart, child: Text(product.scientific_name, style: const TextStyle(fontSize: 12),)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    product.scientific_name,
+                    style: const TextStyle(fontSize: 12),
+                  ),
+                  Obx(() {
+                    final favo = Get.favoriteController.isFavorite(product.id);
+                    return IconButton(
+                        onPressed: () {
+                          if (favo) {
+                            Get.favoriteController.removeProduct(product);
+                          } else {
+                            Get.favoriteController.addProduct(product);
+                          }
+                        },
+                        icon: favo
+                            ? const Icon(
+                                Icons.favorite,
+                                color: Colors.red,
+                              )
+                            : const Icon(Icons.favorite_border));
+                  })
+                ],
+              ),
               // _buildField(
               //     title: "${"scientific_name".tr}:",
               //     text: product.scientific_name),
@@ -69,10 +100,19 @@ class ProductCard extends StatelessWidget {
                     flex: 2,
                     child: IconButton(
                         splashRadius: 12,
-                        onPressed: Get.cartController.products.containsKey(product)? null:  () {
-                          Get.cartController.addProduct(product);
-                        },
-                        icon:  Icon(Icons.add_circle, color: !Get.cartController.products.containsKey(product)? null: Colors.transparent,)),
+                        onPressed:
+                            Get.cartController.products.containsKey(product)
+                                ? null
+                                : () {
+                                    Get.cartController.addProduct(product);
+                                  },
+                        icon: Icon(
+                          Icons.add_circle,
+                          color:
+                              !Get.cartController.products.containsKey(product)
+                                  ? null
+                                  : Colors.transparent,
+                        )),
                   ),
                   Flexible(
                     fit: FlexFit.tight,
@@ -124,8 +164,8 @@ class ProductCard extends StatelessWidget {
                               onChanged: (value) {
                                 // print(int.parse(value));
                                 if (value.isNotEmpty) {
-                                  Get.cartController.setProduct(
-                                      product, int.parse(value));
+                                  Get.cartController
+                                      .setProduct(product, int.parse(value));
                                 }
                               },
                               onSubmitted: (value) {
@@ -148,61 +188,63 @@ class ProductCard extends StatelessWidget {
                     Flexible(
                       flex: 2,
                       fit: FlexFit.tight,
-                      child: Align(alignment: AlignmentDirectional.centerEnd, child: Text("${(product.price * Get.cartController.products[product]!).toString()} S.P")),
+                      child: Align(
+                          alignment: AlignmentDirectional.centerEnd,
+                          child: Text(
+                              "${(product.price * Get.cartController.products[product]!).toString()} S.P")),
                     ),
                   ],
                 ),
-                // Flex(
-                //   direction: Axis.horizontal,
-                //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //   children: [
-                //     Flexible(
-                //       flex: 2,
-                //       child: IconButton(
-                //           splashRadius: 25,
-                //           onPressed: () {
-                //             Get.cartController.addProduct(product);
-                //           },
-                //           icon: const Icon(Icons.add_circle)),
-                //     ),
-                //     const SizedBox(width: 10),
-                //     Flexible(
-                //       flex: 3,
-                //       child: TextField(
-                //         controller: controller,
-                //         textAlign: TextAlign.center,
-                //         decoration: InputDecoration(
-                //             border: OutlineInputBorder(
-                //                 borderRadius: BorderRadius.circular(25))),
-                //         inputFormatters: [
-                //           FilteringTextInputFormatter.digitsOnly
-                //         ],
-                //         keyboardType: TextInputType.number,
-                //         onChanged: (value) {
-                //           if (value.isNotEmpty) {
-                //             Get.cartController
-                //                 .setProduct(product, int.parse(value));
-                //           }
-                //         },
-                //       ),
-                //     ),
-                //     const SizedBox(width: 10),
-                //     Flexible(
-                //       flex: 2,
-                //       child: IconButton(
-                //           splashRadius: 25,
-                //           onPressed: () {
-                //             Get.cartController.removeProduct(product);
-                //           },
-                //           icon: const Icon(Icons.remove_circle)),
-                //     ),
-                //   ],
-                // ),
+              // Flex(
+              //   direction: Axis.horizontal,
+              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //   children: [
+              //     Flexible(
+              //       flex: 2,
+              //       child: IconButton(
+              //           splashRadius: 25,
+              //           onPressed: () {
+              //             Get.cartController.addProduct(product);
+              //           },
+              //           icon: const Icon(Icons.add_circle)),
+              //     ),
+              //     const SizedBox(width: 10),
+              //     Flexible(
+              //       flex: 3,
+              //       child: TextField(
+              //         controller: controller,
+              //         textAlign: TextAlign.center,
+              //         decoration: InputDecoration(
+              //             border: OutlineInputBorder(
+              //                 borderRadius: BorderRadius.circular(25))),
+              //         inputFormatters: [
+              //           FilteringTextInputFormatter.digitsOnly
+              //         ],
+              //         keyboardType: TextInputType.number,
+              //         onChanged: (value) {
+              //           if (value.isNotEmpty) {
+              //             Get.cartController
+              //                 .setProduct(product, int.parse(value));
+              //           }
+              //         },
+              //       ),
+              //     ),
+              //     const SizedBox(width: 10),
+              //     Flexible(
+              //       flex: 2,
+              //       child: IconButton(
+              //           splashRadius: 25,
+              //           onPressed: () {
+              //             Get.cartController.removeProduct(product);
+              //           },
+              //           icon: const Icon(Icons.remove_circle)),
+              //     ),
+              //   ],
+              // ),
             ]),
           );
         },
       ),
     );
   }
-
 }

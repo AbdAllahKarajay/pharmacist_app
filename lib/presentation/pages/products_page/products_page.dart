@@ -14,6 +14,13 @@ class ProductsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scrollController = ScrollController();
+    listener(){
+      if(scrollController.position.atEdge){
+        Get.productsController.getMore(categoryId: category.id);
+      }
+    }
+    scrollController.addListener(listener);
     final textEditingController = TextEditingController();
     Get.productsController.getProducts(categoryId: category.id);
     return Scaffold(
@@ -79,9 +86,13 @@ class ProductsPage extends StatelessWidget {
                     child: ListView.builder(
                       // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       //     crossAxisCount: 1),
-                      itemCount: Get.productsController.products.length,
+                      controller: scrollController,
+                      itemCount: Get.productsController.products.length + 1,
                       padding: const EdgeInsets.symmetric(vertical: 20),
                       itemBuilder: (context, index) {
+                        if(index == Get.productsController.products.length){
+                          return const CircularProgressIndicator();
+                        }
                         return Padding(
                           padding: const EdgeInsets.all(8),
                           child: ProductCard(

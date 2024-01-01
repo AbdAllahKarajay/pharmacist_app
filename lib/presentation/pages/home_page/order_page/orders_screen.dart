@@ -13,6 +13,13 @@ class OrdersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scrollController = ScrollController();
+    listener(){
+      if(scrollController.position.atEdge){
+        Get.ordersController.getMore();
+      }
+    }
+    scrollController.addListener(listener);
     return
       RefreshIndicator(
         onRefresh: () => Get.ordersController.getOrders(),
@@ -27,13 +34,20 @@ class OrdersScreen extends StatelessWidget {
               return const Center(child: ErrorView());
             }
             return ListView.builder(
-              itemCount: Get.ordersController.orders.length,
+              controller: scrollController,
+              itemCount: Get.ordersController.orders.length + 1,
               padding: const EdgeInsets.symmetric(vertical: 20),
               itemBuilder: (context, index) {
+                if(index == Get.ordersController.orders.length){
+                  return const CircularProgressIndicator();
+                }
                 final order = Get.ordersController.orders[index];
-                return OrderCard(
-                  order: order,
-                  onTap: (){},
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                  child: OrderCard(
+                    order: order,
+                    onTap: (){},
+                  ),
                 );
               },
             );

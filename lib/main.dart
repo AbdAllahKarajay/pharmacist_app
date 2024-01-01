@@ -1,8 +1,12 @@
 import 'dart:ui';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pharmacist_application/presentation/pages/favorite_page/favorite_controller.dart';
+import 'package:pharmacist_application/presentation/pages/home_page/order_page/order_controller.dart';
 import 'package:pharmacist_application/presentation/pages/search/search_controller.dart';
 import 'core/config/config.dart';
 import 'core/config/global_data.dart';
@@ -11,14 +15,28 @@ import 'package:pharmacist_application/presentation/pages/login/auth_controller.
 import 'package:pharmacist_application/presentation/pages/login/login_page.dart';
 import 'package:pharmacist_application/presentation/pages/products_page/products_controller.dart';
 
+import 'core/util/firebase_messaging.dart';
 import 'core/util/theme.dart';
+import 'firebase_options.dart';
 import 'presentation/pages/home_page/categories_page/categories_controller.dart';
 
+init() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+  if (!kIsWeb) {
+    await setupFlutterNotifications();
+  }
+}
+
 void main() {
+  init();
   Get.put(Config());
   Get.put(GlobalData());
   Get.put(AuthController());
   Get.put(CategoriesController());
+  Get.put(OrderController());
   Get.put(ProductsController());
   Get.put(CartController());
   Get.put(FavoriteController());
@@ -47,9 +65,10 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyCustomScrollDevices extends ScrollBehavior{
+class MyCustomScrollDevices extends ScrollBehavior {
   @override
-  Set<PointerDeviceKind> get dragDevices => {...super.dragDevices, PointerDeviceKind.mouse};
+  Set<PointerDeviceKind> get dragDevices =>
+      {...super.dragDevices, PointerDeviceKind.mouse};
 }
 
 class AppTranslations extends Translations {
@@ -86,6 +105,8 @@ class AppTranslations extends Translations {
           'settings': 'Settings',
           'my_orders': 'My Orders',
           'products': 'Products',
+          'paid': 'Paid',
+          'unpaid': 'Unpaid',
         },
         'ar': {
           "appName": appNameAr,
@@ -115,6 +136,8 @@ class AppTranslations extends Translations {
           'settings': 'اعدادات',
           'my_orders': 'طلباتي',
           'products': 'المنتجات',
+          'paid': 'مدفوع',
+          'unpaid': 'غير مدفوع',
         }
       };
 }

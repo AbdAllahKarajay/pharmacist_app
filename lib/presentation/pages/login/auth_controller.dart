@@ -26,6 +26,15 @@ class AuthController extends GetxController {
       state.value = LoadingStates.error;
     }
   }
+
+  void getUser() {
+    state.value = LoadingStates.loading;
+    if(Get.globalData.getUser()){
+      state.value = LoadingStates.done;
+    }else{
+      state.value = LoadingStates.nothing;
+    }
+  }
 }
 
 extension FindAuthController on GetInterface {

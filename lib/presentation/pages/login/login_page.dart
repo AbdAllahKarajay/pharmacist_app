@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:pharmacist_application/core/config/global_data.dart';
 import 'package:pharmacist_application/core/util/theme.dart';
 import 'package:pharmacist_application/presentation/pages/login/auth_controller.dart';
 
@@ -40,6 +41,7 @@ class _LoginPageState extends State<LoginPage>{
   @override
   void initState() {
     super.initState();
+    Get.authController.getUser();
     listener = Get.authController.state.listen((state)=>_listener(state));
   }
 

@@ -31,18 +31,37 @@ class ProductsController extends GetxController {
   final RxList<Product> products = <Product>[].obs;
   RxInt? searchTypeIndex;
   List<String> searchTypes = ["scientific_name", "commercial_name"];
+  int page = 2;
+
   String get searchType => searchTypes[searchTypeIndex!.value];
 
-  Future<void> getProducts({int? categoryId}) async {
+  Future<void> getProducts({required int categoryId}) async {
     state.value = LoadingStates.loading;
     try {
-      // final newProducts = staticProducts;
       final newProducts = await RemoteDatasource.instance
           .performGetListRequest<Product>("/api/category/$categoryId/medicines",
               fromMap: Product.fromMap);
-      // final newProducts = staticProducts;
-      state.value = LoadingStates.done;
+      page = 2;
       products.value = newProducts;
+      state.value = LoadingStates.done;
+    } on RemoteExceptions {
+      state.value = LoadingStates.error;
+    }
+  }
+
+  Future<void> getMore({required int categoryId}) async {
+    try {
+      if(page == -1){
+        return;
+      }
+      final newProducts = await RemoteDatasource.instance
+          .performGetListRequest<Product>("/api/category/$categoryId/medicines/${page++}",
+              fromMap: Product.fromMap);
+      if(newProducts.isEmpty){
+        page = -1;
+      }else{
+        products.addAll(newProducts);
+      }
     } on RemoteExceptions {
       state.value = LoadingStates.error;
     }

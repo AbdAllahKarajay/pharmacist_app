@@ -39,11 +39,13 @@ class GlobalData extends GetxController {
     Get.offAll(()=> const LoginPage());
   }
 
-  void getUser() {
+  bool getUser() {
     final userMap = _box.read("user");
     if(userMap != null){
       _user.value = User.fromMap(_box.read("user"));
+      return true;
     }
+    return false;
   }
 
   //firstTime

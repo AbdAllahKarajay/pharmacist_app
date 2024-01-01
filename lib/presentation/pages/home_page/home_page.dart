@@ -3,9 +3,12 @@ import 'package:get/get.dart';
 import 'package:pharmacist_application/core/data/enums/loading_states.dart';
 import 'package:pharmacist_application/presentation/components/appBar/home_app_bar.dart';
 import 'package:pharmacist_application/presentation/components/general/error_view.dart';
+import 'package:pharmacist_application/presentation/pages/favorite_page/favorite_controller.dart';
 
 import 'package:pharmacist_application/presentation/pages/home_page/categories_page/categories_controller.dart';
 import 'package:pharmacist_application/presentation/pages/home_page/categories_page/categories_screen.dart';
+import 'package:pharmacist_application/presentation/pages/home_page/order_page/order_controller.dart';
+import 'package:pharmacist_application/presentation/pages/home_page/order_page/orders_screen.dart';
 
 import '../products_page/products_page.dart';
 import 'categories_page/components/category_card.dart';
@@ -27,6 +30,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
   @override
   Widget build(BuildContext context) {
     Get.categoriesController.getCategories();
+    Get.ordersController.getOrders();
+    Get.favoriteController.getProducts();
     return Scaffold(
       appBar: HomeAppBar(
         searchController: TextEditingController(),
@@ -41,7 +46,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
           controller: tabController,
           children: [
             CategoriesScreen(),
-            Column(),
+            OrdersScreen(),
           ],
         ),
       ),

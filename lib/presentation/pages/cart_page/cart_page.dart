@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pharmacist_application/presentation/components/general/main_filled_button.dart';
 import 'package:pharmacist_application/presentation/pages/cart_page/cart_controller.dart';
+import 'package:pharmacist_application/presentation/pages/home_page/order_page/order_controller.dart';
 import 'component/product_cart_card.dart';
 
 class CartPage extends StatelessWidget {
@@ -32,8 +33,12 @@ class CartPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              Center(child: ElevatedButton(onPressed: (){}, child: Text("send".tr))),
+              Text("${"total_price".tr}: ${Get.cartController.total_price}"),
               const SizedBox(height: 20),
+              Center(child: MainFilledButton(onTap: (){
+                Get.ordersController.makeOrder(Get.cartController.total_price, Get.cartController.products);
+              }, child: Text("send".tr))),
+              const SizedBox(height: 60),
             ],
           );
         },

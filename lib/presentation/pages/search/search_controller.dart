@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 
 import '../../../core/data/enums/loading_states.dart';
@@ -50,9 +51,12 @@ class SearchGetController extends GetxController{
 
   RxString searchText = "".obs;
 
+  CancelToken _cancelToken = CancelToken();
   Future<void> getProducts() async {
     state.value = LoadingStates.loading;
     try {
+      _cancelToken.cancel();
+      _cancelToken = CancelToken();
       final newProducts = await RemoteDatasource.instance.performGetListRequest<Product>("/api/search", fromMap: Product.fromMap);
       // final newProducts = staticProducts;
       state.value = LoadingStates.done;
