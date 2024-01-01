@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "899065627426",
+    "project_id": "programminglangs-bf5d1",
+    "storage_bucket": "programminglangs-bf5d1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:899065627426:android:ce565b3ce9694de54f1b7b",
+        "android_client_info": {
+          "package_name": "com.example.pharmacist_application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDoJWDjMPbPWxNKIn6Azi90eFO6EuS0RQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
