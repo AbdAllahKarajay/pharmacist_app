@@ -22,7 +22,6 @@ import 'firebase_options.dart';
 import 'presentation/pages/home_page/categories_page/categories_controller.dart';
 
 init() async {
-  print('Welcome');
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -42,12 +41,6 @@ init() async {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // await Permission.notification.isDenied.then((value) {
-  //   if (value) {
-  //     Permission.notification.request();
-  //   }
-  // });
   init();
   Get.put(Config());
   Get.put(GlobalData());
