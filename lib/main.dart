@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:pharmacist_application/presentation/pages/favorite_page/favorite_controller.dart';
 import 'package:pharmacist_application/presentation/pages/home_page/order_page/order_controller.dart';
@@ -21,16 +22,32 @@ import 'firebase_options.dart';
 import 'presentation/pages/home_page/categories_page/categories_controller.dart';
 
 init() async {
+  print('Welcome');
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  Get.globalData.fcmToken = await FirebaseMessaging.instance.getToken();
+  NotificationSettings notificationSettings;
+  do {
+    notificationSettings = await FirebaseMessaging.instance
+        .requestPermission();
+  }while(notificationSettings.authorizationStatus != AuthorizationStatus.authorized);
+
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+  FirebaseMessaging.onMessage.listen((event) => firebaseMessagingBackgroundHandler);
   if (!kIsWeb) {
     await setupFlutterNotifications();
   }
 }
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // await Permission.notification.isDenied.then((value) {
+  //   if (value) {
+  //     Permission.notification.request();
+  //   }
+  // });
   init();
   Get.put(Config());
   Get.put(GlobalData());
@@ -107,6 +124,7 @@ class AppTranslations extends Translations {
           'products': 'Products',
           'paid': 'Paid',
           'unpaid': 'Unpaid',
+          'no_more': 'No More',
         },
         'ar': {
           "appName": appNameAr,
@@ -138,6 +156,7 @@ class AppTranslations extends Translations {
           'products': 'المنتجات',
           'paid': 'مدفوع',
           'unpaid': 'غير مدفوع',
+          'no_more': 'لا يوجد مزيد',
         }
       };
 }

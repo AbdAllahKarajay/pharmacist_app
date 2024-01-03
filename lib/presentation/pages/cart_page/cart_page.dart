@@ -33,10 +33,13 @@ class CartPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              Text("${"total_price".tr}: ${Get.cartController.total_price}"),
+              Obx(()=> Text("${"total_price".tr}: ${Get.cartController.total_price}")),
               const SizedBox(height: 20),
-              Center(child: MainFilledButton(onTap: (){
-                Get.ordersController.makeOrder(Get.cartController.total_price, Get.cartController.products);
+              Center(child: MainFilledButton(onTap: () async {
+                await Get.ordersController.makeOrder(Get.cartController.total_price, Get.cartController.products);
+                Get.back();
+                await Future.delayed(const Duration(milliseconds: 500));
+                Get.cartController.products.clear();
               }, child: Text("send".tr))),
               const SizedBox(height: 60),
             ],

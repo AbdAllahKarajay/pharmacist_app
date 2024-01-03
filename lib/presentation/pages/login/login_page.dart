@@ -53,12 +53,13 @@ class _LoginPageState extends State<LoginPage>{
 
   @override
   Widget build(BuildContext context) {
+    print(Get.globalData.fcmToken);
     final TextEditingController phone = TextEditingController();
     final TextEditingController pass = TextEditingController();
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
       floatingActionButton:
-          const SizedBox(width: 80, height: 80, child: ThemeButton()),
+          const SizedBox(width: 80, height: 80, child: ThemeButton(text: false,)),
       body: Center(
         child: Container(
           padding: const EdgeInsets.all(25),
@@ -66,65 +67,71 @@ class _LoginPageState extends State<LoginPage>{
             direction: Axis.vertical,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Spacer(flex: 2),
               //header
+              const Spacer(flex: 1),
               Text("welcome".tr),
+              const Spacer(flex: 1),
+              // Flexible(flex: 2, child: Center(child: Image.asset("assets/logo_trans.png"),),),
+              const Spacer(flex: 2),
               const Spacer(flex: 1),
               //login
               Flexible(
-                flex: 10,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    UnfilledTextField(
-                      controller: phone,
-                      color: Theme.of(context).isDark
-                          ? ColorConfig.WHITE
-                          : ColorConfig.primary,
-                      hintText: "phone".tr,
-                      icon: Icons.phone,
-                      keyboardType: TextInputType.phone,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                        //TODO: number formatters
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    UnfilledTextField(
-                      obscure: true,
-                      controller: pass,
-                      color: Theme.of(context).isDark
-                          ? ColorConfig.WHITE
-                          : ColorConfig.primary,
-                      hintText: "password".tr,
-                      icon: Icons.password,
-                      // inputFormatters: [
-                      //   //TODO: password formatters
-                      // ],
-                    ),
-                    const SizedBox(height: 80),
-                    ColoredFilledButton(
-                      color: Theme.of(context).isDark
-                          ? ColorConfig.WHITE
-                          : ColorConfig.primary,
-                      text: "login".tr,
-                      secondColor: Theme.of(context).isDark
-                          ? ColorConfig.primary
-                          : ColorConfig.WHITE,
-                      icon: Icons.login,
-                      onTap: () {
-                        if (Get.authController.state.value !=
-                            LoadingStates.loading) {
-                          Get.authController.login(
-                            phone: phone.text,
-                            password: pass.text,
-                          );
-                        }
-                      },
-                    ),
-                  ],
+                flex: 4,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      UnfilledTextField(
+                        controller: phone,
+                        color: Theme.of(context).isDark
+                            ? ColorConfig.WHITE
+                            : ColorConfig.primary,
+                        hintText: "phone".tr,
+                        icon: Icons.phone,
+                        keyboardType: TextInputType.phone,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          //TODO: number formatters
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      UnfilledTextField(
+                        obscure: true,
+                        controller: pass,
+                        color: Theme.of(context).isDark
+                            ? ColorConfig.WHITE
+                            : ColorConfig.primary,
+                        hintText: "password".tr,
+                        icon: Icons.password,
+                        // inputFormatters: [
+                        //   //TODO: password formatters
+                        // ],
+                      ),
+                      const SizedBox(height: 80),
+                      ColoredFilledButton(
+                        color: Theme.of(context).isDark
+                            ? ColorConfig.WHITE
+                            : ColorConfig.primary,
+                        text: "login".tr,
+                        secondColor: Theme.of(context).isDark
+                            ? ColorConfig.primary
+                            : ColorConfig.WHITE,
+                        icon: Icons.login,
+                        onTap: () {
+                          if (Get.authController.state.value !=
+                              LoadingStates.loading) {
+                            Get.authController.login(
+                              phone: phone.text,
+                              password: pass.text,
+                            );
+                          }
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
+              const Spacer(flex: 2),
             ],
           ),
         ),

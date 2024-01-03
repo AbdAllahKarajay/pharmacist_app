@@ -1,27 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pharmacist_application/presentation/pages/home_page/order_page/order_controller.dart';
 
 import '../../../../../core/data/models/order.dart';
 
 class OrderCard extends StatelessWidget {
-  const OrderCard({Key? key, required this.order, required this.onTap})
-      : super(key: key);
+  const OrderCard({Key? key, required this.order}) : super(key: key);
   final Order order;
-  final void Function() onTap;
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(15),
-      child: Container(
-        padding: const EdgeInsets.all(15),
-        // decoration: BoxDecoration(
-        //   borderRadius: BorderRadius.circular(15),
-        //   color: Theme.of(context).cardTheme.color,
-        // ),
-        child: ExpansionTile(
-            title: Column(
+    return ExpansionTile(
+        textColor: Theme.of(context).textTheme.bodyMedium!.color,
+        iconColor: Theme.of(context).textTheme.bodyMedium!.color,
+        tilePadding: const EdgeInsets.symmetric(horizontal: 8),
+        childrenPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+        trailing: order.attributes.status != 'pending'? null: IconButton(
+            onPressed: () => Get.ordersController.deleteOrder(order.id),
+            icon: const Icon(Icons.delete)),
+        title: Column(
           children: [
             Row(
               children: [
@@ -48,16 +45,23 @@ class OrderCard extends StatelessWidget {
             Text("${"medicine_count".tr}: ${order.medicines.length}"),
           ],
         ),
-          children:
-            order.medicines.map((e) => Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text(e.medicine_id.toString()),
-                Text("medicine_amount".tr + e.medicine_amount.toString()),
-              ],
-            )).toList()
-        ),
-      ),
-    );
+        children: [
+          const Divider(),
+          const SizedBox(height: 8),
+          ...order.medicines
+              .map((e) => Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // Spacer(),
+                      SizedBox(
+                          width: ListTileTheme.of(context).horizontalTitleGap),
+                      Text(e.medicine_id.toString()),
+                      const Spacer(),
+                      Text("medicine_amount".tr + e.medicine_amount.toString()),
+                      const Spacer(),
+                    ],
+                  ))
+              .toList(),
+        ]);
   }
 }

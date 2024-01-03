@@ -39,14 +39,21 @@ class OrdersScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 20),
               itemBuilder: (context, index) {
                 if(index == Get.ordersController.orders.length){
-                  return const CircularProgressIndicator();
+                  if(Get.ordersController.moreState.value == LoadingStates.error){
+                    return const Center(child: Icon(Icons.cancel_outlined, size: 50, color: Colors.red,));
+                  }else if(Get.ordersController.moreState.value == LoadingStates.done){
+                    return Center(child: Text("no_more".tr));
+                  }else if(Get.ordersController.moreState.value == LoadingStates.nothing){
+                    return const Center(child: SizedBox());
+                  }else{
+                    return const Center(child: CircularProgressIndicator());
+                  }
                 }
                 final order = Get.ordersController.orders[index];
                 return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                  padding: const EdgeInsets.symmetric(vertical: 15),
                   child: OrderCard(
                     order: order,
-                    onTap: (){},
                   ),
                 );
               },

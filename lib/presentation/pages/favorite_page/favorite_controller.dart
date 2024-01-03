@@ -25,8 +25,8 @@ class FavoriteController extends GetxController {
 
   Future<void> addProduct(Product product) async {
     state.value = LoadingStates.loading;
-    await RemoteDatasource.instance.performPostRequest<Product>("/api/favorit",
-        fromMap: Product.fromMap, body: {
+    await RemoteDatasource.instance.performPostRequest("/api/favorit",
+        body: {
           "medicin_id": product.id
         });
     products.add(product);
@@ -35,10 +35,8 @@ class FavoriteController extends GetxController {
 
   Future<void> removeProduct(Product product) async {
     state.value = LoadingStates.loading;
-    await RemoteDatasource.instance.performDeleteRequest("/api/favorit",
-        body: {
-          "medicin_id": product.id
-        });products.remove(product);
+    await RemoteDatasource.instance.performDeleteRequest("/api/favorit/${product.id}");
+    products.remove(product);
     state.value = LoadingStates.done;
   }
 

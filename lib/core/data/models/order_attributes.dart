@@ -28,7 +28,7 @@ class OrderAttributes{
 
   factory OrderAttributes.fromMap(Map<String, dynamic> map) {
     return OrderAttributes(
-      pharmacist_id: map['pharmacist_id'],
+      pharmacist_id: map['pharmacist_id'] as int,
       status: map['status'] as String,
       date: map['date'] as String,
       paid: map['paid'] as int,

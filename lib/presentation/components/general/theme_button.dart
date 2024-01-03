@@ -4,7 +4,8 @@ import 'package:pharmacist_application/core/config/config.dart';
 import 'package:pharmacist_application/core/util/theme.dart';
 
 class ThemeButton extends StatelessWidget {
-  const ThemeButton({Key? key}) : super(key: key);
+  const ThemeButton({Key? key, this.text = true}) : super(key: key);
+  final bool text;
 
   @override
   Widget build(BuildContext context) {
@@ -13,11 +14,13 @@ class ThemeButton extends StatelessWidget {
       onPressed: () => Get.globalConfig.changeThemeMode(
           Theme.of(context).isDark ? ThemeMode.light : ThemeMode.dark),
       icon: Obx(
-        () => Row(
+            () => Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text(Get.globalConfig.themeMode.value == ThemeMode.dark
-                ? "Dark" : "Light"),
+            if (text)
+              Text(Get.globalConfig.themeMode.value == ThemeMode.dark
+                  ? "Dark"
+                  : "Light"),
             Icon(
               Get.globalConfig.themeMode.value == ThemeMode.dark
                   ? Icons.nightlight_outlined
@@ -29,3 +32,4 @@ class ThemeButton extends StatelessWidget {
     );
   }
 }
+

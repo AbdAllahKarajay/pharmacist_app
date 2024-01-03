@@ -65,7 +65,7 @@ class ProductCartTile extends StatelessWidget {
                                 Get.cartController.addProduct(product);
                               },
                               icon: const Icon(Icons.add_circle)),
-                          const SizedBox(width: 10),
+                          const Spacer(),
                           SizedBox(
                             width: 30,
                             child: TextField(
@@ -94,7 +94,7 @@ class ProductCartTile extends StatelessWidget {
                               },
                             ),
                           ),
-                          const SizedBox(width: 10),
+                          const Spacer(),
                           IconButton(
                               splashRadius: 25,
                               onPressed: () {

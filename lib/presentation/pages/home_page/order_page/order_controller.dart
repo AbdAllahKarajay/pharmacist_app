@@ -9,6 +9,7 @@ import '../../../../core/repository/remote_datasource.dart';
 
 class OrderController extends GetxController{
   final Rx<LoadingStates> state = LoadingStates.nothing.obs;
+  final Rx<LoadingStates> moreState = LoadingStates.nothing.obs;
   final RxList<Order> orders = <Order>[].obs;
   int page = 2;
 
@@ -25,25 +26,28 @@ class OrderController extends GetxController{
   }
 
   Future<void> getMore() async {
+      moreState.value = LoadingStates.loading;
     try {
       if(page == -1){
         return;
       }
-      List<Order> newOrders = await RemoteDatasource.instance.performGetListRequest<Order>("/api/order/${page++}", fromMap: Order.fromMap);
+      List<Order> newOrders = await RemoteDatasource.instance.performGetListRequest<Order>("/api/order/",params: {"page": page}, fromMap: Order.fromMap);
+      page++;
       if(newOrders.isEmpty){
         page = -1;
       }else{
         orders.addAll(newOrders);
       }
+      moreState.value = LoadingStates.done;
     } on RemoteExceptions {
-      state.value = LoadingStates.error;
+      moreState.value = LoadingStates.error;
     }
   }
 
   makeOrder(int totalPrice, Map<Product, int> products) async {
     state.value = LoadingStates.loading;
     try{
-      Order newOrder = await RemoteDatasource.instance.performPostRequest<Order>("/api/order", fromMap: Order.fromMap, body: {
+      await RemoteDatasource.instance.performPostRequest("/api/order", body: {
         "date": intl.DateFormat("yyyy-MM-dd").format(DateTime.now()),
         "total_price": totalPrice,
         "medicines": products.entries.map((e) => {
@@ -51,9 +55,19 @@ class OrderController extends GetxController{
           "medicine_amount": e.value
         }).toList(),
       });
-      orders.add(newOrder);
       state.value = LoadingStates.done;
     }on RemoteExceptions{
+      state.value = LoadingStates.error;
+    }
+  }
+
+  deleteOrder(int id) async {
+    state.value = LoadingStates.loading;
+    try {
+      await RemoteDatasource.instance.performDeleteRequest("/api/order/$id");
+      state.value = LoadingStates.done;
+      orders.removeWhere((element) => element.id == id);
+    } on RemoteExceptions {
       state.value = LoadingStates.error;
     }
   }

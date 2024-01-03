@@ -9,6 +9,8 @@ import '../data/models/user.dart';
 class GlobalData extends GetxController {
   final GetStorage _box = GetStorage();
 
+  String? fcmToken;
+
   get isLoggedIn => _user.value != null;
 
   void init() {

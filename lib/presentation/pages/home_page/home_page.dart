@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pharmacist_application/core/config/global_data.dart';
 import 'package:pharmacist_application/core/data/enums/loading_states.dart';
 import 'package:pharmacist_application/presentation/components/appBar/home_app_bar.dart';
 import 'package:pharmacist_application/presentation/components/general/error_view.dart';
@@ -29,6 +30,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
   }
   @override
   Widget build(BuildContext context) {
+    print("Get.globalData.fcmToken");
+    print(Get.globalData.fcmToken);
     Get.categoriesController.getCategories();
     Get.ordersController.getOrders();
     Get.favoriteController.getProducts();

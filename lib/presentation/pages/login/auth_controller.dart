@@ -11,17 +11,22 @@ class AuthController extends GetxController {
   Future<void> login({required String phone, required String password}) async {
     state.value = LoadingStates.loading;
     try {
-      User user =
-          await RemoteDatasource.instance.performPostRequest<User>("/api/login",
-              body: {
-                "phone": phone,
-                "password": password,
-              },
-              useToken: false,
-              fromMap: User.fromMap);
-      // User user = User(token: "token", id: "id", phone: phone);
-      state.value = LoadingStates.done;
+      User user = await RemoteDatasource.instance.performPostRequest<User>(
+        "/api/login",
+        body: {
+          "phone": phone,
+          "password": password,
+        },
+        useToken: false,
+        fromMap: User.fromMap,
+      );
       Get.globalData.setUser(user);
+      try {
+        await setToken();
+        state.value = LoadingStates.done;
+      } catch (e) {
+        Get.globalData.removeUser();
+      }
     } catch (_) {
       state.value = LoadingStates.error;
     }
@@ -29,11 +34,21 @@ class AuthController extends GetxController {
 
   void getUser() {
     state.value = LoadingStates.loading;
-    if(Get.globalData.getUser()){
+    if (Get.globalData.getUser()) {
       state.value = LoadingStates.done;
-    }else{
+    } else {
       state.value = LoadingStates.nothing;
     }
+  }
+
+  Future<void> setToken() async {
+    await RemoteDatasource.instance.performPostRequest(
+      "/api/set_device_token/${Get.globalData.fcmToken}",
+    );
+  }
+
+  logout() {
+    Get.globalData.removeUser();
   }
 }
 

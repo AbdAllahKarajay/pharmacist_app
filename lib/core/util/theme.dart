@@ -80,6 +80,7 @@ class ThemeConfig {
       colorScheme: _colorScheme(isDarkMode),
       scaffoldBackgroundColor:
           isDarkMode ? ColorConfig.DARK_BACKGROUND : ColorConfig.BACKGROUND,
+      progressIndicatorTheme: const ProgressIndicatorThemeData(color: ColorConfig.primaryLight),
       // highlightColor: Colors.blue,
       // splashColor: Colors.red,
       // hoverColor: Colors.white.withOpacity(0.2),

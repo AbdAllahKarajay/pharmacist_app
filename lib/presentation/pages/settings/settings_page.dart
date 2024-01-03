@@ -4,6 +4,7 @@ import 'package:pharmacist_application/core/config/config.dart';
 
 import 'package:flutter/material.dart';
 import 'package:pharmacist_application/core/util/theme.dart';
+import 'package:pharmacist_application/presentation/pages/login/auth_controller.dart';
 
 import '../../components/general/theme_button.dart';
 
@@ -31,7 +32,10 @@ class SettingsPage extends StatelessWidget {
         print(Get.locale);
         Get.updateLocale(Get.locale?.languageCode == 'ar'? const Locale('en') : const Locale('ar'));
         print(Get.locale);
-          })
+          }),
+        const Spacer(),
+        ListTile(title: Text("logout".tr), onTap: Get.authController.logout(),),
+        const SizedBox(height: 20),
       ],
         ),
     );

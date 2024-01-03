@@ -22,10 +22,11 @@ bool isFlutterLocalNotificationsInitialized = false;
 late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
 Future<void> setupFlutterNotifications() async {
+  print("setupFlutterNotifications");
   if (isFlutterLocalNotificationsInitialized) {
     return;
   }
-
+  print("settingUp");
   channel = const AndroidNotificationChannel(
     'high_importance_channel', // id
     'High Importance Notifications', // title
@@ -56,6 +57,8 @@ Future<void> setupFlutterNotifications() async {
 }
 
 void showFlutterNotification(RemoteMessage message) {
+  print("showFlutterNotification");
+  print(message.toMap());
   RemoteNotification? notification = message.notification;
   AndroidNotification? android = message.notification?.android;
   if (notification != null && android != null && !kIsWeb) {
@@ -70,7 +73,7 @@ void showFlutterNotification(RemoteMessage message) {
           channelDescription: channel.description,
           // TODO add a proper drawable resource to android, for now using
           //      one that already exists in example app.
-          icon: 'launch_background',
+          icon: 'launch_image',
         ),
       ),
     );

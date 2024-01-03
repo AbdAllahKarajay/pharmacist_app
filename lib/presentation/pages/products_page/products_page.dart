@@ -12,6 +12,7 @@ class ProductsPage extends StatelessWidget {
   const ProductsPage({Key? key, required this.category}) : super(key: key);
   final CategoryModel category;
 
+
   @override
   Widget build(BuildContext context) {
     final scrollController = ScrollController();
@@ -91,7 +92,15 @@ class ProductsPage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 20),
                       itemBuilder: (context, index) {
                         if(index == Get.productsController.products.length){
-                          return const CircularProgressIndicator();
+                          if(Get.productsController.moreState.value == LoadingStates.error){
+                            return const Center(child: Icon(Icons.cancel_outlined, size: 50, color: Colors.red,));
+                          }else if(Get.productsController.moreState.value == LoadingStates.done){
+                            return Center(child: Text("no_more".tr));
+                          }else if(Get.productsController.moreState.value == LoadingStates.nothing){
+                            return const Center(child: SizedBox());
+                          }else{
+                            return const Center(child: CircularProgressIndicator());
+                          }
                         }
                         return Padding(
                           padding: const EdgeInsets.all(8),
