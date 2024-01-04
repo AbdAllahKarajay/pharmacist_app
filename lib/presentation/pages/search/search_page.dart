@@ -52,7 +52,7 @@ class SearchPage extends StatelessWidget {
                       }
                     },
                     selected:
-                    Get.searchController.searchTypeIndex!.value ==
+                    Get.searchController.searchTypeIndex.value ==
                         1,
                     selectedColor: Theme.of(context).primaryColor,
                   ),

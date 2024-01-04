@@ -84,8 +84,8 @@ class MyCustomScrollDevices extends ScrollBehavior {
 }
 
 class AppTranslations extends Translations {
-  static const appNameEn = "AppName";
-  static const appNameAr = "اسم التطبيق";
+  static const appNameEn = "Mangerug";
+  static const appNameAr = "مانجيروغ";
 
   @override
   Map<String, Map<String, String>> get keys => {
@@ -125,6 +125,8 @@ class AppTranslations extends Translations {
           'total_price': 'Total Price',
           'logout': 'Logout',
           'dark': 'Dark Mode',
+          'dont_have_account': "Don't Have Account",
+          'have_account': "Have Account",
         },
         'ar': {
           "appName": appNameAr,
@@ -162,6 +164,8 @@ class AppTranslations extends Translations {
           'total_price': 'السعر الكلي',
           'logout': 'تسجيل الخروج',
           'dark': 'الوضع الليلي',
+          'dont_have_account': "ليس لديك حساب",
+          'have_account': "لديك حساب مسبقاً",
         }
       };
 }

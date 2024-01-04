@@ -142,7 +142,7 @@ class _LoginPageState extends State<LoginPage>{
               const SizedBox(height: 10),
               TextButton(onPressed: (){
                 Get.off(const SignupPage());
-              }, child: Text("dont_have_account".tr, style: const TextStyle(color: Colors.white, decoration: TextDecoration.underline))),
+              }, child: Text("Don't have an account".tr, style: const TextStyle(color: Colors.white, decoration: TextDecoration.underline))),
               const Spacer(flex: 2),
             ],
           ),

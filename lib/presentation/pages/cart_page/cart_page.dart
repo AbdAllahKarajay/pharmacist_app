@@ -36,8 +36,8 @@ class CartPage extends StatelessWidget {
               Obx(()=> Text("${"total_price".tr}: ${Get.cartController.total_price}")),
               const SizedBox(height: 20),
               Center(child: MainFilledButton(onTap: () async {
-                await Get.ordersController.makeOrder(Get.cartController.total_price, Get.cartController.products);
                 Get.back();
+                await Get.ordersController.makeOrder(Get.cartController.total_price, Get.cartController.products);
                 await Future.delayed(const Duration(milliseconds: 500));
                 Get.cartController.products.clear();
               }, child: Text("send".tr))),
