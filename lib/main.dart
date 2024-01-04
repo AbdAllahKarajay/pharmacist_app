@@ -4,7 +4,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:pharmacist_application/presentation/pages/favorite_page/favorite_controller.dart';
 import 'package:pharmacist_application/presentation/pages/home_page/order_page/order_controller.dart';
@@ -27,13 +26,16 @@ init() async {
   );
   Get.globalData.fcmToken = await FirebaseMessaging.instance.getToken();
   NotificationSettings notificationSettings;
-  do {
+  // do {
     notificationSettings = await FirebaseMessaging.instance
-        .requestPermission();
-  }while(notificationSettings.authorizationStatus != AuthorizationStatus.authorized);
+        .requestPermission(sound: true, alert: true);
+  // }while(notificationSettings.authorizationStatus != AuthorizationStatus.authorized);
+  print(notificationSettings.authorizationStatus);
 
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-  FirebaseMessaging.onMessage.listen((event) => firebaseMessagingBackgroundHandler);
+  FirebaseMessaging.onMessage.listen((event) => firebaseMessagingBackgroundHandler(event));
+  FirebaseMessaging.onMessageOpenedApp.listen(firebaseMessagingBackgroundHandler);
+  // FirebaseMessaging.onMessageOpenedApp.listen(firebaseMessagingBackgroundHandler);
   if (!kIsWeb) {
     await setupFlutterNotifications();
   }
@@ -117,7 +119,12 @@ class AppTranslations extends Translations {
           'products': 'Products',
           'paid': 'Paid',
           'unpaid': 'Unpaid',
+          'signup': 'Signup',
           'no_more': 'No More',
+          'search for category': 'Search For Category',
+          'total_price': 'Total Price',
+          'logout': 'Logout',
+          'dark': 'Dark Mode',
         },
         'ar': {
           "appName": appNameAr,
@@ -150,6 +157,11 @@ class AppTranslations extends Translations {
           'paid': 'مدفوع',
           'unpaid': 'غير مدفوع',
           'no_more': 'لا يوجد مزيد',
+          'signup': 'إنشاء حساب',
+          'search for category': 'بحث عن صنف',
+          'total_price': 'السعر الكلي',
+          'logout': 'تسجيل الخروج',
+          'dark': 'الوضع الليلي',
         }
       };
 }

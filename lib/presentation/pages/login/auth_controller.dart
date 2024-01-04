@@ -50,6 +50,25 @@ class AuthController extends GetxController {
   logout() {
     Get.globalData.removeUser();
   }
+
+  Future<void> signup({required String phone, required String password, required String name, required String location}) async {
+    state.value = LoadingStates.loading;
+    try {
+      await RemoteDatasource.instance.performPostRequest(
+        "/api/phregister",
+        body: {
+          "phone": phone,
+          "password": password,
+          "name": name,
+          "location": location,
+        },
+        useToken: false,
+      );
+    } catch (_) {
+      state.value = LoadingStates.error;
+      throw Exception();
+    }
+  }
 }
 
 extension FindAuthController on GetInterface {

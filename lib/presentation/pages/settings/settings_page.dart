@@ -22,7 +22,7 @@ class SettingsPage extends StatelessWidget {
       body: Column(
       children: [
         const SizedBox(height: 20),
-        SwitchListTile(title: const Text("Dark"), value: Theme.of(context).isDark , onChanged: (value){
+        SwitchListTile(title: Text("dark".tr), value: Theme.of(context).isDark , onChanged: (value){
         Get.globalConfig.changeThemeMode(
             value ? ThemeMode.dark : ThemeMode.light);
           }),
@@ -34,7 +34,7 @@ class SettingsPage extends StatelessWidget {
         print(Get.locale);
           }),
         const Spacer(),
-        ListTile(title: Text("logout".tr), onTap: Get.authController.logout(),),
+        ListTile(title: Text("logout".tr), onTap: () => Get.authController.logout(),),
         const SizedBox(height: 20),
       ],
         ),

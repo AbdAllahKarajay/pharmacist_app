@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: TabBarView(
           controller: tabController,
-          children: [
+          children: const [
             CategoriesScreen(),
             OrdersScreen(),
           ],

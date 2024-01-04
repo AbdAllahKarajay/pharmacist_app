@@ -8,7 +8,7 @@ import '../../../core/data/models/product.dart';
 import '../../../core/repository/error_handling/remote_exceptions.dart';
 import '../../../core/repository/remote_datasource.dart';
 
-class SearchGetController extends GetxController{
+class SearchGetController extends GetxController {
   final Rx<LoadingStates> state = LoadingStates.nothing.obs;
   final RxList<Product> products = <Product>[].obs;
 
@@ -50,14 +50,25 @@ class SearchGetController extends GetxController{
   RxInt selectedType = 0.obs;
 
   RxString searchText = "".obs;
+  RxInt searchTypeIndex = 0.obs;
+  List<String> searchTypes = ["scientific_name", "commercial_name"];
+
+  String get searchType => searchTypes[searchTypeIndex.value];
 
   CancelToken _cancelToken = CancelToken();
-  Future<void> getProducts() async {
+
+  Future<void> getProducts(String value) async {
     state.value = LoadingStates.loading;
     try {
       _cancelToken.cancel();
       _cancelToken = CancelToken();
-      final newProducts = await RemoteDatasource.instance.performGetListRequest<Product>("/api/search", fromMap: Product.fromMap);
+      final newProducts =
+          await RemoteDatasource.instance.performGetListRequest<Product>(
+        "/api/search",
+        params: {searchType: value},
+        fromMap: Product.fromMap,
+      );
+      print(newProducts);
       // final newProducts = staticProducts;
       state.value = LoadingStates.done;
       products.value = newProducts;
@@ -67,6 +78,6 @@ class SearchGetController extends GetxController{
   }
 }
 
-extension FindAuthController on GetInterface{
+extension FindAuthController on GetInterface {
   SearchGetController get searchController => Get.find<SearchGetController>();
 }

@@ -55,6 +55,7 @@ class OrderController extends GetxController{
           "medicine_amount": e.value
         }).toList(),
       });
+      getOrders();
       state.value = LoadingStates.done;
     }on RemoteExceptions{
       state.value = LoadingStates.error;

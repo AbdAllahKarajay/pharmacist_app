@@ -24,9 +24,9 @@ class RemoteDatasource {
   // static const String scheme = 'http';
   // static const int? port = 5000;
   // static const String host = '192.168.43.162';
-  static const String scheme = 'https';
-  static const int? port = null;
-  static const String host = '5e13-45-14-71-22.ngrok-free.app';
+  static const String scheme = 'http';
+  static const int port = 8000;
+  static const String host = '192.168.6.162';
   static Uri uri = Uri(scheme: scheme, host: host, port: port);
 
   Future performPutRequest<T>(

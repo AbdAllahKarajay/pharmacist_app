@@ -52,8 +52,8 @@ class ProductsPage extends StatelessWidget {
                   if (Get.productsController.searchTypeIndex != null) 
                   Padding(
                     padding: const EdgeInsets.all(10),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                    child: Wrap(
+                        // mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           ChoiceChip(
                             label: Text(Get.productsController.searchTypes[0].tr),
